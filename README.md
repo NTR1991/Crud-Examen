@@ -153,6 +153,8 @@ json
 
 *NTR1991 – Full Stack en formación | Estudiante de FP DAW*
 
+---
+
 ## 📅 Fecha
 
 Septiembre 2026
