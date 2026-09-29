@@ -1,8 +1,8 @@
-# 🎮 CRUD de Videojuegos con PHP
+# 🎬 CRUD de Películas con PHP
 
 ## 📋 Descripción
 
-Aplicación CRUD completa construida con **PHP y MySQL** para gestionar un catálogo de videojuegos. Permite a los usuarios añadir, visualizar, editar y eliminar videojuegos, con una interfaz limpia y fácil de usar. Además, incluye una **API REST** para acceso programático.
+Aplicación CRUD completa construida con **PHP y MySQL** para gestionar un catálogo de películas. Permite a los usuarios añadir, visualizar, editar y eliminar películas, con una interfaz limpia y fácil de usar. Además, incluye una **API REST** para acceso programático.
 
 ---
 
@@ -16,10 +16,10 @@ Construir una aplicación CRUD (Create, Read, Update, Delete) completa utilizand
 
 | Característica | Descripción |
 | :--- | :--- |
-| **Listar videojuegos** | Muestra todos los videojuegos en una tabla (READ) |
-| **Añadir videojuego** | Formulario para crear un nuevo videojuego (CREATE) |
-| **Editar videojuego** | Formulario para actualizar un videojuego existente (UPDATE) |
-| **Eliminar videojuego** | Elimina un videojuego con confirmación (DELETE) |
+| **Listar películas** | Muestra todas las películas en una tabla (READ) |
+| **Añadir película** | Formulario para crear una nueva película (CREATE) |
+| **Editar película** | Formulario para actualizar una película existente (UPDATE) |
+| **Eliminar película** | Elimina una película con confirmación (DELETE) |
 | **API REST** | Proporciona endpoints JSON para integración (GET, POST, PUT, DELETE) |
 | **Validación de datos** | Valida campos obligatorios y rango de años |
 | **Mensajes de éxito/error** | Feedback al usuario tras cada operación |
@@ -41,17 +41,17 @@ Construir una aplicación CRUD (Create, Read, Update, Delete) completa utilizand
 ## 📂 Estructura de carpetas
 
 ```
-21-php-video-game-crud/
+21-php-movie-crud/
 ├── api/
-│   └── juegos.php          # API REST (GET, POST, PUT, DELETE)
+│   └── peliculas.php       # API REST (GET, POST, PUT, DELETE)
 ├── css/
 │   └── style.css           # Estilos (fondo oscuro, botones de colores)
 ├── conexion.php            # Conexión a la base de datos (PDO)
-├── index.php               # Listado de videojuegos (READ)
+├── index.php               # Listado de películas (READ)
 ├── crear.php               # Formulario de creación (CREATE)
 ├── editar.php              # Formulario de edición (UPDATE)
 ├── eliminar.php            # Lógica de eliminación (DELETE)
-├── videojuegos.sql         # Exportación de la base de datos (estructura + datos)
+├── peliculas.sql           # Exportación de la base de datos (estructura + datos)
 └── README.md
 ```
 
@@ -59,45 +59,36 @@ Construir una aplicación CRUD (Create, Read, Update, Delete) completa utilizand
 
 ## 🗄️ Configuración de la base de datos
 
-Importa el archivo `videojuegos.sql` usando **phpMyAdmin** o la línea de comandos:
+Importa el archivo `peliculas.sql` usando **phpMyAdmin** o la línea de comandos:
 
-```
-bash
-mysql -u root -p < videojuegos.sql
+```bash
+mysql -u root -p < peliculas.sql
 ```
 
 O copia el script SQL manualmente:
 
-```
-sql
-CREATE DATABASE IF NOT EXISTS videojuegos
+```sql
+CREATE DATABASE IF NOT EXISTS cine
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-USE videojuegos;
+USE cine;
 
-CREATE TABLE IF NOT EXISTS juegos (
+CREATE TABLE IF NOT EXISTS peliculas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(150) NOT NULL,
-    desarrollador VARCHAR(100) NOT NULL,
-    plataforma VARCHAR(50) NOT NULL,
+    director VARCHAR(100) NOT NULL,
     genero VARCHAR(50) NOT NULL,
-    anio INT NOT NULL
+    anio INT NOT NULL,
+    duracion INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO juegos (titulo, desarrollador, plataforma, genero, anio) VALUES
-('Red Dead Redemption 2', 'Rockstar Game', 'PS5', 'Acción', 2025),
-('Furia de Titanes', 'Santa Monica Studio', 'PS4', 'Aventura', 2006),
-('The Legend of Zelda', 'Nintendo', 'Nintendo Switch', 'Aventura', 2017),
-('Minecraft', 'Mojang', 'PC', 'Sandbox', 2011),
-('God of War Ragnarok', 'Santa Monica Studio', 'PS5', 'Acción', 2022),
-('Red Dead Redemption 2', 'Rockstar Games', 'PS4', 'Aventura', 2018),
-('The Witcher 3', 'CD Projekt Red', 'PC', 'RPG', 2015),
-('Elden Ring', 'FromSoftware', 'PS5', 'RPG', 2022),
-('Cyberpunk 2077', 'CD Projekt Red', 'PC', 'RPG', 2020),
-('Super Mario Odyssey', 'Nintendo', 'Nintendo Switch', 'Plataformas', 2017),
-('The Last of Us Part II', 'Naughty Dog', 'PS4', 'Aventura', 2020),
-('Horizon Forbidden West', 'Guerrilla Games', 'PS5', 'Acción', 2022);
+INSERT INTO peliculas (titulo, director, genero, anio, duracion) VALUES
+('Caperucita Roja', 'Luis Diaz', 'Aventura', 2025, 145),
+('Titanic', 'Frank Suarez', 'Romance', 1999, 180),
+('God of War', 'Steven Road', 'Acción', 2026, 185),
+('Hombres de Negro 2', 'Will Mathers', 'Acción', 2002, 195),
+('Furia de Titanes', 'Robert Garcia', 'Épico', 2025, 195);
 ```
 
 ---
@@ -107,7 +98,7 @@ INSERT INTO juegos (titulo, desarrollador, plataforma, genero, anio) VALUES
 1. Clona el repositorio o descarga los archivos.
 2. Coloca la carpeta del proyecto en tu servidor local (por ejemplo, `htdocs` para XAMPP).
 3. Inicia Apache y MySQL en XAMPP.
-4. Importa el archivo `videojuegos.sql` usando phpMyAdmin.
+4. Importa el archivo `peliculas.sql` usando phpMyAdmin.
 5. Abre `index.php` en tu navegador.
 
 ---
@@ -116,22 +107,21 @@ INSERT INTO juegos (titulo, desarrollador, plataforma, genero, anio) VALUES
 
 | Método | Endpoint | Descripción | Respuesta |
 | :--- | :--- | :--- | :--- |
-| GET | `/api/juegos.php` | Obtener todos los videojuegos | 200 + array JSON |
-| GET | `/api/juegos.php?id=1` | Obtener un videojuego específico | 200 + objeto JSON |
-| POST | `/api/juegos.php` | Crear un nuevo videojuego | 201 + objeto JSON |
-| PUT | `/api/juegos.php?id=1` | Actualizar un videojuego | 200 + objeto JSON |
-| DELETE | `/api/juegos.php?id=1` | Eliminar un videojuego | 204 Sin contenido |
+| GET | `/api/peliculas.php` | Obtener todas las películas | 200 + array JSON |
+| GET | `/api/peliculas.php?id=1` | Obtener una película específica | 200 + objeto JSON |
+| POST | `/api/peliculas.php` | Crear una nueva película | 201 + objeto JSON |
+| PUT | `/api/peliculas.php?id=1` | Actualizar una película | 200 + objeto JSON |
+| DELETE | `/api/peliculas.php?id=1` | Eliminar una película | 204 Sin contenido |
 
-### Ejemplo: Crear un videojuego (POST)
+### Ejemplo: Crear una película (POST)
 
-```
-json
+```json
 {
-    "titulo": "The Legend of Zelda",
-    "desarrollador": "Nintendo",
-    "plataforma": "Nintendo Switch",
-    "genero": "Aventura",
-    "anio": 2023
+    "titulo": "El Padrino",
+    "director": "Francis Ford Coppola",
+    "genero": "Drama",
+    "anio": 1972,
+    "duracion": 175
 }
 ```
 
@@ -152,8 +142,6 @@ json
 ## 👤 Autor
 
 *NTR1991 – Full Stack en formación | Estudiante de FP DAW*
-
----
 
 ## 📅 Fecha
 
